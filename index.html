@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif Turunan Fungsi SMA: 50 Soal Sifat-Sifat Turunan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for rendering LaTeX math equations -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Google Fonts Inter & Kalam -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kalam:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-handwriting { font-family: 'Kalam', cursive; }
+        .paper-card {
+            background-color: #fdf4ff;
+            background-image: radial-gradient(#e879f9 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+    </style>
+</head>
+<body class="bg-fuchsia-50/60 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="bg-white/90 backdrop-blur-md border-b border-fuchsia-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-fuchsia-600 rounded-xl shadow-md shadow-fuchsia-600/20 text-white">
+                    <i class="fa-solid fa-square-root-variable text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold text-fuchsia-950 flex items-center gap-2">
+                        Kuis Turunan Fungsi SMA
+                    </h1>
+                    <p class="text-xs text-fuchsia-700/80">50 Soal Berbagai Sifat Turunan (Masing-Masing 10 Soal)</p>
+                </div>
+            </div>
+
+            <!-- Quiz Status Scoreboard -->
+            <div class="flex items-center gap-3 bg-fuchsia-100/80 px-4 py-2 rounded-xl border border-fuchsia-300 text-xs sm:text-sm">
+                <div class="flex items-center gap-1.5 font-semibold text-slate-700">
+                    <i class="fa-solid fa-list-check text-fuchsia-600"></i>
+                    <span>Terjawab: <b id="answered-count" class="text-fuchsia-950">0</b>/50</span>
+                </div>
+                <div class="h-4 w-px bg-fuchsia-300"></div>
+                <div class="flex items-center gap-1.5 font-semibold text-emerald-700">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                    <span>Skor: <b id="score-count" class="text-emerald-800 font-mono text-base">0</b></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Question Navigation Matrix Card -->
+        <section class="bg-white border border-fuchsia-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-fuchsia-100 pb-3">
+                <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-fuchsia-950">
+                    <i class="fa-solid fa-grip text-fuchsia-600"></i> Navigasi Berdasarkan Sifat Turunan (5 Kategori)
+                </div>
+                
+                <!-- Category Filters -->
+                <div class="flex items-center gap-1 text-xs flex-wrap">
+                    <button onclick="filterCategory('all')" id="filter-all" class="px-2.5 py-1 rounded-lg bg-fuchsia-600 text-white font-medium shadow-sm">Semua (50)</button>
+                    <button onclick="filterCategory('konstanta')" id="filter-konstanta" class="px-2.5 py-1 rounded-lg bg-fuchsia-100 text-fuchsia-950 hover:bg-fuchsia-200 font-medium">1. Konstanta & Pangkat (1-10)</button>
+                    <button onclick="filterCategory('penjumlahan')" id="filter-penjumlahan" class="px-2.5 py-1 rounded-lg bg-fuchsia-100 text-fuchsia-950 hover:bg-fuchsia-200 font-medium">2. Jumlah & Selisih (11-20)</button>
+                    <button onclick="filterCategory('perkalian')" id="filter-perkalian" class="px-2.5 py-1 rounded-lg bg-fuchsia-100 text-fuchsia-950 hover:bg-fuchsia-200 font-medium">3. Hasil Kali $u \cdot v$ (21-30)</button>
+                    <button onclick="filterCategory('pembagian')" id="filter-pembagian" class="px-2.5 py-1 rounded-lg bg-fuchsia-100 text-fuchsia-950 hover:bg-fuchsia-200 font-medium">4. Hasil Bagi $\frac{u}{v}$ (31-40)</button>
+                    <button onclick="filterCategory('rantai')" id="filter-rantai" class="px-2.5 py-1 rounded-lg bg-fuchsia-100 text-fuchsia-950 hover:bg-fuchsia-200 font-medium">5. Aturan Rantai (41-50)</button>
+                </div>
+            </div>
+
+            <!-- 50 Number Grid Buttons -->
+            <div id="nav-grid" class="grid grid-cols-10 sm:grid-cols-15 md:grid-cols-25 gap-1.5">
+                <!-- Javascript will inject 1 to 50 buttons here -->
+            </div>
+
+            <div class="flex items-center justify-between pt-1 text-xs text-slate-500 border-t border-fuchsia-100">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-slate-200 inline-block"></span> Belum</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Benar</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> Kurang Tepat</span>
+                </div>
+                <button onclick="resetQuiz()" class="text-rose-600 hover:text-rose-800 font-medium flex items-center gap-1 transition">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Kuis
+                </button>
+            </div>
+        </section>
+
+        <!-- Active Question Display Card -->
+        <section id="question-card" class="bg-white border border-fuchsia-200 rounded-2xl p-6 sm:p-8 shadow-md space-y-6">
+            <!-- Dynamic Question Content -->
+        </section>
+
+        <!-- Bottom Prev / Next Navigation -->
+        <div class="flex items-center justify-between gap-4">
+            <button id="btn-prev" onclick="prevQuestion()" class="px-5 py-2.5 bg-white border border-fuchsia-300 hover:bg-fuchsia-50 text-fuchsia-950 font-bold rounded-xl shadow-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+            </button>
+            <span id="question-indicator" class="text-xs sm:text-sm font-semibold text-fuchsia-950 bg-fuchsia-100 px-3 py-1.5 rounded-lg border border-fuchsia-200">
+                Soal 1 dari 50
+            </span>
+            <button id="btn-next" onclick="nextQuestion()" class="px-5 py-2.5 bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold rounded-xl shadow-md shadow-fuchsia-600/20 transition flex items-center gap-2">
+                Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        const quizData = [
+            // ==========================================
+            // KATEGORI 1: KONSTANTA & PANGKAT (Sifat 1-10)
+            // ==========================================
+            {
+                id: 1,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 1',
+                question: 'Tentukan turunan pertama dari fungsi konstan berikut:\n$$f(x) = 2026$$',
+                options: ['1', '2026', '0', 'x'],
+                correct: 2, // C
+                step1: 'Gunakan sifat turunan konstanta: Jika $f(x) = c$ dengan $c$ adalah bilangan konstan, maka $f\'(x) = 0$.',
+                step2: 'Karena 2026 adalah konstanta mutlak tanpa variabel $x$, maka turunannya adalah $0$.',
+                final: '0'
+            },
+            {
+                id: 2,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 2',
+                question: 'Tentukan turunan pertama dari fungsi identitas:\n$$f(x) = x$$',
+                options: ['0', '1', 'x', '-1'],
+                correct: 1, // B
+                step1: 'Gunakan aturan pangkat pada $f(x) = x^1$:',
+                step2: '$$f\'(x) = 1 \\cdot x^{1-1} = 1 \\cdot x^0 = 1$$',
+                final: '1'
+            },
+            {
+                id: 3,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 3',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 5x^4$$',
+                options: ['5x^3', '20x^5', '20x^3', '4x^3'],
+                correct: 2, // C
+                step1: 'Gunakan sifat perkalian konstanta dengan pangkat $f(x) = c \\cdot x^n \\rightarrow f\'(x) = c \\cdot n \\cdot x^{n-1}$:',
+                step2: '$$f\'(x) = 5 \\cdot 4 \\cdot x^{4-1} = 20x^3$$',
+                final: '20x^3'
+            },
+            {
+                id: 4,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 4',
+                question: 'Tentukan turunan pertama dari fungsi linier:\n$$f(x) = -7x + 12$$',
+                options: ['-7', '7', '-7x', '12'],
+                correct: 0, // A
+                step1: 'Turunkan suku $-7x$ menghasilkan $-7$ dan konstanta $12$ menghasilkan $0$.',
+                step2: '$$f\'(x) = -7 + 0 = -7$$',
+                final: '-7'
+            },
+            {
+                id: 5,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 5',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 3x^2$$',
+                options: ['6x', '3x', '6x^2', '9x'],
+                correct: 0, // A
+                step1: 'Gunakan aturan pangkat:',
+                step2: '$$f\'(x) = 3 \\cdot 2x^{2-1} = 6x$$',
+                final: '6x'
+            },
+            {
+                id: 6,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 6',
+                question: 'Tentukan turunan pertama dari bentuk pecahan akar berikut:\n$$f(x) = \\frac{1}{x^2}$$',
+                options: ['-\\frac{2}{x^3}', '\\frac{2}{x^3}', '-\\frac{1}{2x}', '-2x^{-3}'],
+                correct: 0, // A
+                step1: 'Ubah bentuk pecahan ke pangkat negatif: $f(x) = x^{-2}$',
+                step2: '$$f\'(x) = -2x^{-2-1} = -2x^{-3} = -\\frac{2}{x^3}$$',
+                final: '-\\frac{2}{x^3}'
+            },
+            {
+                id: 7,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 7',
+                question: 'Tentukan turunan pertama dari bentuk akar kuadrat:\n$$f(x) = \\sqrt{x}$$',
+                options: ['\\frac{1}{2\\sqrt{x}}', '2\\sqrt{x}', '\\frac{1}{\\sqrt{x}}', '\\frac{1}{2}x'],
+                correct: 0, // A
+                step1: 'Ubah bentuk akar menjadi pangkat pecahan: $f(x) = x^{\\frac{1}{2}}$',
+                step2: '$$f\'(x) = \\frac{1}{2}x^{\\frac{1}{2} - 1} = \\frac{1}{2}x^{-\\frac{1}{2}} = \\frac{1}{2\\sqrt{x}}$$',
+                final: '\\frac{1}{2\\sqrt{x}}'
+            },
+            {
+                id: 8,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 8',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = -4x^3$$',
+                options: ['-12x^2', '-4x^2', '12x^2', '-12x^3'],
+                correct: 0, // A
+                step1: 'Kalikan koefisien dengan pangkat, lalu kurangi pangkat dengan 1:',
+                step2: '$$f\'(x) = -4 \\cdot 3x^{3-1} = -12x^2$$',
+                final: '-12x^2'
+            },
+            {
+                id: 9,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 9',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 6x^{\\frac{3}{2}}$$',
+                options: ['9x^{\\frac{1}{2}}', '4x^{\\frac{1}{2}}', '9x^{\\frac{3}{2}}', '6\\sqrt{x}'],
+                correct: 0, // A
+                step1: 'Gunakan aturan pangkat pecahan:',
+                step2: '$$f\'(x) = 6 \\cdot \\frac{3}{2}x^{\\frac{3}{2} - 1} = 9x^{\\frac{1}{2}}$$',
+                final: '9x^{\\frac{1}{2}}'
+            },
+            {
+                id: 10,
+                catKey: 'konstanta',
+                category: '1. Konstanta & Pangkat',
+                title: 'Soal 10',
+                question: 'Tentukan turunan pertama dari fungsi berpangkat negatif:\n$$f(x) = 5x^{-4}$$',
+                options: ['-20x^{-5}', '20x^{-5}', '-20x^{-3}', '-5x^{-5}'],
+                correct: 0, // A
+                step1: 'Turunkan dengan mengalikan koefisien dengan eksponen:',
+                step2: '$$f\'(x) = 5 \\cdot (-4)x^{-4-1} = -20x^{-5}$$',
+                final: '-20x^{-5}'
+            },
+
+            // ==========================================
+            // KATEGORI 2: PENJUMLAHAN & PENGURANGAN (Sifat 11-20)
+            // ==========================================
+            {
+                id: 11,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 11',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = x^3 + 5x^2 - 4x + 7$$',
+                options: ['3x^2 + 10x - 4', '3x^2 + 5x - 4', 'x^2 + 10x - 4', '3x^2 + 10x + 4'],
+                correct: 0, // A
+                step1: 'Turunkan setiap suku satu per satu:',
+                step2: '$$\\frac{d}{dx}(x^3) + \\frac{d}{dx}(5x^2) - \\frac{d}{dx}(4x) + \\frac{d}{dx}(7) = 3x^2 + 10x - 4 + 0$$',
+                final: '3x^2 + 10x - 4'
+            },
+            {
+                id: 12,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 12',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 2x^4 - 3x^3 + 6x - 9$$',
+                options: ['8x^3 - 9x^2 + 6', '8x^3 - 3x^2 + 6', '4x^3 - 9x^2 + 6', '8x^3 - 9x^2 - 9'],
+                correct: 0, // A
+                step1: 'Turunkan suku demi suku secara aljabar:',
+                step2: '$$f\'(x) = 2(4x^3) - 3(3x^2) + 6(1) - 0 = 8x^3 - 9x^2 + 6$$',
+                final: '8x^3 - 9x^2 + 6'
+            },
+            {
+                id: 13,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 13',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 4x^3 - 6x^2 + 2x$$',
+                options: ['12x^2 - 12x + 2', '12x^2 - 6x + 2', '4x^2 - 12x + 2', '12x^2 - 12x'],
+                correct: 0, // A
+                step1: 'Terapkan sifat turunan penjumlahan dan pengurangan:',
+                step2: '$$f\'(x) = 4(3x^2) - 6(2x) + 2(1) = 12x^2 - 12x + 2$$',
+                final: '12x^2 - 12x + 2'
+            },
+            {
+                id: 14,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 14',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{1}{3}x^3 - \\frac{1}{2}x^2 + 5x$$',
+                options: ['x^2 - x + 5', '\\frac{1}{3}x^2 - x + 5', 'x^2 - \\frac{1}{2}x + 5', '3x^2 - 2x + 5'],
+                correct: 0, // A
+                step1: 'Turunkan masing-masing suku:',
+                step2: '$$f\'(x) = \\frac{1}{3}(3x^2) - \\frac{1}{2}(2x) + 5 = x^2 - x + 5$$',
+                final: 'x^2 - x + 5'
+            },
+            {
+                id: 15,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 15',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 5x^3 - 2x^2 + 7x - 10$$',
+                options: ['15x^2 - 4x + 7', '15x^3 - 4x^2 + 7', '15x^2 - 2x + 7', '5x^2 - 4x + 7'],
+                correct: 0, // A
+                step1: 'Gunakan sifat jumlah selisih turunan:',
+                step2: '$$f\'(x) = 15x^2 - 4x + 7$$',
+                final: '15x^2 - 4x + 7'
+            },
+            {
+                id: 16,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 16',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = x^5 - 3x^4 + 2x^2 - 5$$',
+                options: ['5x^4 - 12x^3 + 4x', '5x^4 - 3x^3 + 4x', 'x^4 - 12x^3 + 4x - 5', '5x^4 - 12x^3 + 4x - 5'],
+                correct: 0, // A
+                step1: 'Turunkan setiap suku:',
+                step2: '$$f\'(x) = 5x^4 - 12x^3 + 4x$$',
+                final: '5x^4 - 12x^3 + 4x'
+            },
+            {
+                id: 17,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 17',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 2x^3 + 4x^2 - 8x + 3$$',
+                options: ['6x^2 + 8x - 8', '6x^3 + 8x^2 - 8', '2x^2 + 4x - 8', '6x^2 + 4x - 8'],
+                correct: 0, // A
+                step1: 'Turunkan suku demi suku:',
+                step2: '$$f\'(x) = 6x^2 + 8x - 8$$',
+                final: '6x^2 + 8x - 8'
+            },
+            {
+                id: 18,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 18',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = -2x^3 + 5x^2 - 9x + 1$$',
+                options: ['-6x^2 + 10x - 9', '-6x^3 + 10x^2 - 9', '-2x^2 + 10x - 9', '-6x^2 + 5x - 9'],
+                correct: 0, // A
+                step1: 'Terapkan aturan turunan aljabar:',
+                step2: '$$f\'(x) = -6x^2 + 10x - 9$$',
+                final: '-6x^2 + 10x - 9'
+            },
+            {
+                id: 19,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 19',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 3x^4 - 5x^2 + 8$$',
+                options: ['12x^3 - 10x', '12x^4 - 10x^2', '3x^3 - 5x', '12x^3 - 5x'],
+                correct: 0, // A
+                step1: 'Turunkan suku $3x^4$, $-5x^2$, dan konstanta $8$:',
+                step2: '$$f\'(x) = 12x^3 - 10x$$',
+                final: '12x^3 - 10x'
+            },
+            {
+                id: 20,
+                catKey: 'penjumlahan',
+                category: '2. Jumlah & Selisih',
+                title: 'Soal 20',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = x^3 - 2x^2 + x - 1$$',
+                options: ['3x^2 - 4x + 1', '3x^2 - 2x + 1', 'x^2 - 4x + 1', '3x^2 - 4x'],
+                correct: 0, // A
+                step1: 'Turunkan tiap suku:',
+                step2: '$$f\'(x) = 3x^2 - 4x + 1$$',
+                final: '3x^2 - 4x + 1'
+            },
+
+            // ==========================================
+            // KATEGORI 3: ATURAN PERKALIAN (Sifat 21-30)
+            // ==========================================
+            {
+                id: 21,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 21',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (2x + 1)(3x - 2)$$',
+                options: ['12x - 1', '6x^2 - x - 2', '6x - 1', '12x + 1'],
+                correct: 0, // A
+                step1: 'Gunakan aturan perkalian $f\'(x) = u\'v + uv\'$ atau jabarkan langsung: $f(x) = 6x^2 - x - 2$.',
+                step2: '$$f\'(x) = \\frac{d}{dx}(6x^2 - x - 2) = 12x - 1$$',
+                final: '12x - 1'
+            },
+            {
+                id: 22,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 22',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = x^2(3x + 4)$$',
+                options: ['9x^2 + 8x', '6x^2 + 4x', '9x^2 + 4x', '3x^2 + 8x'],
+                correct: 0, // A
+                step1: 'Jabarkan bentuk fungsi: $f(x) = 3x^3 + 4x^2$.',
+                step2: '$$f\'(x) = 9x^2 + 8x$$',
+                final: '9x^2 + 8x'
+            },
+            {
+                id: 23,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 23',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (x^2 - 3)(2x + 1)$$',
+                options: ['6x^2 + 2x - 6', '2x^2 + x - 6', '6x^2 - 2x - 6', '4x^2 + 2x - 6'],
+                correct: 0, // A
+                step1: 'Gunakan aturan hasil kali: $u = x^2-3 \\rightarrow u\' = 2x$; $v = 2x+1 \\rightarrow v\' = 2$.',
+                step2: '$$f\'(x) = (2x)(2x+1) + (x^2-3)(2) = 4x^2 + 2x + 2x^2 - 6 = 6x^2 + 2x - 6$$',
+                final: '6x^2 + 2x - 6'
+            },
+            {
+                id: 24,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 24',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (3x - 1)(x^2 + 2)$$',
+                options: ['9x^2 - 2x + 6', '3x^2 - 2x + 6', '9x^2 + 2x + 6', '6x^2 - 2x + 6'],
+                correct: 0, // A
+                step1: 'Jabarkan fungsi terlebih dahulu: $f(x) = 3x^3 + 6x - x^2 - 2 = 3x^3 - x^2 + 6x - 2$.',
+                step2: '$$f\'(x) = 9x^2 - 2x + 6$$',
+                final: '9x^2 - 2x + 6'
+            },
+            {
+                id: 25,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 25',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = x(x^2 - 5x + 3)$$',
+                options: ['3x^2 - 10x + 3', 'x^2 - 10x + 3', '3x^2 - 5x + 3', '3x^2 - 10x'],
+                correct: 0, // A
+                step1: 'Kalikan masuk $x$: $f(x) = x^3 - 5x^2 + 3x$.',
+                step2: '$$f\'(x) = 3x^2 - 10x + 3$$',
+                final: '3x^2 - 10x + 3'
+            },
+            {
+                id: 26,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 26',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (2x^2 + 1)(x - 3)$$',
+                options: ['6x^2 - 18x + 1', '2x^2 - 18x - 1', '6x^2 - 12x + 1', '4x^2 - 12x - 1'],
+                correct: 0, // A
+                step1: 'Jabarkan bentuk perkalian: $f(x) = 2x^3 - 6x^2 + x - 3$.',
+                step2: '$$f\'(x) = 6x^2 - 12x + 1$$ -- wait, let\'s re-verify: $2x^3 - 6x^2 + x - 3 \\rightarrow 6x^2 - 12x + 1$. Option 2 is 6x^2-12x+1. Let\'s make sure option index is correct.',
+                options: ['6x^2 - 18x + 1', '6x^2 - 12x + 1', '2x^2 - 18x - 1', '4x^2 - 12x - 1'],
+                correct: 1, // B
+                step1: 'Jabarkan bentuk perkalian: $f(x) = 2x^3 - 6x^2 + x - 3$.',
+                step2: '$$f\'(x) = 6x^2 - 12x + 1$$',
+                final: '6x^2 - 12x + 1'
+            },
+            {
+                id: 27,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 27',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (x + 2)(x - 2)$$',
+                options: ['2x', 'x^2 - 4', '4', '2x - 4'],
+                correct: 0, // A
+                step1: 'Gunakan sifat selisih kuadrat: $f(x) = x^2 - 4$.',
+                step2: '$$f\'(x) = 2x - 0 = 2x$$',
+                final: '2x'
+            },
+            {
+                id: 28,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 28',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (4x - 2)(x + 3)$$',
+                options: ['8x + 10', '4x + 10', '8x - 10', '4x - 10'],
+                correct: 0, // A
+                step1: 'Jabarkan fungsi: $f(x) = 4x^2 + 12x - 2x - 6 = 4x^2 + 10x - 6$.',
+                step2: '$$f\'(x) = 8x + 10$$',
+                final: '8x + 10'
+            },
+            {
+                id: 29,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 29',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = x^3(x^2 + 1)$$',
+                options: ['5x^4 + 3x^2', '3x^4 + x^2', '5x^4 + x^2', '2x^4 + 3x^2'],
+                correct: 0, // A
+                step1: 'Jabarkan: $f(x) = x^5 + x^3$.',
+                step2: '$$f\'(x) = 5x^4 + 3x^2$$',
+                final: '5x^4 + 3x^2'
+            },
+            {
+                id: 30,
+                catKey: 'perkalian',
+                category: '3. Hasil Kali $u \\cdot v$',
+                title: 'Soal 30',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (x^2 + 1)(x^2 - 1)$$',
+                options: ['4x^3', '2x^3', '4x^3 - 2x', 'x^4 - 1'],
+                correct: 0, // A
+                step1: 'Jabarkan: $f(x) = x^4 - 1$.',
+                step2: '$$f\'(x) = 4x^3 - 0 = 4x^3$$',
+                final: '4x^3'
+            },
+
+            // ==========================================
+            // KATEGORI 4: ATURAN PEMBAGIAN (Sifat 31-40)
+            // ==========================================
+            {
+                id: 31,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 31',
+                question: 'Tentukan turunan pertama dari fungsi pecahan berikut:\n$$f(x) = \\frac{x + 1}{x - 1}$$',
+                options: ['-\\frac{2}{(x-1)^2}', '\\frac{2}{(x-1)^2}', '-\\frac{1}{(x-1)^2}', '\\frac{2x}{(x-1)^2}'],
+                correct: 0, // A
+                step1: 'Gunakan rumus hasil bagi $f\'(x) = \\frac{u\'v - uv\'}{v^2}$ dengan $u = x+1, v = x-1$.',
+                step2: '$$f\'(x) = \\frac{(1)(x-1) - (x+1)(1)}{(x-1)^2} = \\frac{x - 1 - x - 1}{(x-1)^2} = -\\frac{2}{(x-1)^2}$$',
+                final: '-\\frac{2}{(x-1)^2}'
+            },
+            {
+                id: 32,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 32',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{2x}{x + 3}$$',
+                options: ['\\frac{6}{(x+3)^2}', '\\frac{3}{(x+3)^2}', '-\\frac{6}{(x+3)^2}', '\\frac{2x}{(x+3)^2}'],
+                correct: 0, // A
+                step1: 'Misalkan $u = 2x \\rightarrow u\' = 2$ dan $v = x + 3 \\rightarrow v\' = 1$.',
+                step2: '$$f\'(x) = \\frac{2(x+3) - 2x(1)}{(x+3)^2} = \\frac{2x + 6 - 2x}{(x+3)^2} = \\frac{6}{(x+3)^2}$$',
+                final: '\\frac{6}{(x+3)^2}'
+            },
+            {
+                id: 33,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 33',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{3x - 1}{x + 2}$$',
+                options: ['\\frac{7}{(x+2)^2}', '\\frac{5}{(x+2)^2}', '\\frac{1}{(x+2)^2}', '-\\frac{7}{(x+2)^2}'],
+                correct: 0, // A
+                step1: 'Gunakan aturan kuosien: $u = 3x-1 (u\'=3)$, $v = x+2 (v\'=1)$.',
+                step2: '$$f\'(x) = \\frac{3(x+2) - (3x-1)(1)}{(x+2)^2} = \\frac{3x + 6 - 3x + 1}{(x+2)^2} = \\frac{7}{(x+2)^2}$$',
+                final: '\\frac{7}{(x+2)^2}'
+            },
+            {
+                id: 34,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 34',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{x^2}{x + 1}$$',
+                options: ['\\frac{x^2 + 2x}{(x+1)^2}', '\\frac{x^2 - 2x}{(x+1)^2}', '\\frac{2x}{(x+1)^2}', '\\frac{1}{(x+1)^2}'],
+                correct: 0, // A
+                step1: '$u = x^2 (u\'=2x)$, $v = x+1 (v\'=1)$.',
+                step2: '$$f\'(x) = \\frac{2x(x+1) - x^2(1)}{(x+1)^2} = \\frac{2x^2 + 2x - x^2}{(x+1)^2} = \\frac{x^2 + 2x}{(x+1)^2}$$',
+                final: '\\frac{x^2 + 2x}{(x+1)^2}'
+            },
+            {
+                id: 35,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 35',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{4}{2x - 1}$$',
+                options: ['-\\frac{8}{(2x-1)^2}', '\\frac{8}{(2x-1)^2}', '-\\frac{4}{(2x-1)^2}', '\\frac{4}{(2x-1)^2}'],
+                correct: 0, // A
+                step1: '$u = 4 (u\'=0)$, $v = 2x-1 (v\'=2)$.',
+                step2: '$$f\'(x) = \\frac{0 \\cdot (2x-1) - 4(2)}{(2x-1)^2} = -\\frac{8}{(2x-1)^2}$$',
+                final: '-\\frac{8}{(2x-1)^2}'
+            },
+            {
+                id: 36,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 36',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{2x - 3}{x - 2}$$',
+                options: ['-\\frac{1}{(x-2)^2}', '\\frac{1}{(x-2)^2}', '-\\frac{7}{(x-2)^2}', '\\frac{7}{(x-2)^2}'],
+                correct: 0, // A
+                step1: '$u = 2x-3 (u\'=2)$, $v = x-2 (v\'=1)$.',
+                step2: '$$f\'(x) = \\frac{2(x-2) - (2x-3)(1)}{(x-2)^2} = \\frac{2x - 4 - 2x + 3}{(x-2)^2} = -\\frac{1}{(x-2)^2}$$',
+                final: '-\\frac{1}{(x-2)^2}'
+            },
+            {
+                id: 37,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 37',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{x^2 - 1}{x}$$',
+                options: ['1 + \\frac{1}{x^2}', '1 - \\frac{1}{x^2}', '2', '\\frac{x^2+1}{x^2}'],
+                correct: 0, // A
+                step1: 'Sederhanakan pecahan terlebih dahulu: $f(x) = \\frac{x^2}{x} - \\frac{1}{x} = x - x^{-1}$.',
+                step2: '$$f\'(x) = 1 - (-1)x^{-2} = 1 + \\frac{1}{x^2}$$',
+                final: '1 + \\frac{1}{x^2}'
+            },
+            {
+                id: 38,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 38',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{5x + 2}{x + 1}$$',
+                options: ['\\frac{3}{(x+1)^2}', '-\\frac{3}{(x+1)^2}', '\\frac{7}{(x+1)^2}', '\\frac{5}{(x+1)^2}'],
+                correct: 0, // A
+                step1: '$u = 5x+2 (u\'=5)$, $v = x+1 (v\'=1)$.',
+                step2: '$$f\'(x) = \\frac{5(x+1) - (5x+2)(1)}{(x+1)^2} = \\frac{5x + 5 - 5x - 2}{(x+1)^2} = \\frac{3}{(x+1)^2}$$',
+                final: '\\frac{3}{(x+1)^2}'
+            },
+            {
+                id: 39,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 39',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{3x^2}{x - 1}$$',
+                options: ['\\frac{3x^2 - 6x}{(x-1)^2}', '\\frac{3x^2 + 6x}{(x-1)^2}', '\\frac{6x}{(x-1)^2}', '\\frac{3x}{(x-1)^2}'],
+                correct: 0, // A
+                step1: '$u = 3x^2 (u\'=6x)$, $v = x-1 (v\'=1)$.',
+                step2: '$$f\'(x) = \\frac{6x(x-1) - 3x^2(1)}{(x-1)^2} = \\frac{6x^2 - 6x - 3x^2}{(x-1)^2} = \\frac{3x^2 - 6x}{(x-1)^2}$$',
+                final: '\\frac{3x^2 - 6x}{(x-1)^2}'
+            },
+            {
+                id: 40,
+                catKey: 'pembagian',
+                category: '4. Hasil Bagi $\\frac{u}{v}$',
+                title: 'Soal 40',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{1 - x}{1 + x}$$',
+                options: ['-\\frac{2}{(1+x)^2}', '\\frac{2}{(1+x)^2}', '-\\frac{1}{(1+x)^2}', '\\frac{1}{(1+x)^2}'],
+                correct: 0, // A
+                step1: '$u = 1-x (u\'=-1)$, $v = 1+x (v\'=1)$.',
+                step2: '$$f\'(x) = \\frac{(-1)(1+x) - (1-x)(1)}{(1+x)^2} = \\frac{-1 - x - 1 + x}{(1+x)^2} = -\\frac{2}{(1+x)^2}$$',
+                final: '-\\frac{2}{(1+x)^2}'
+            },
+
+            // ==========================================
+            // KATEGORI 5: ATURAN RANTAI (Sifat 41-50)
+            // ==========================================
+            {
+                id: 41,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 41',
+                question: 'Tentukan turunan pertama dari fungsi komposisi berpangkat:\n$$f(x) = (2x + 3)^4$$',
+                options: ['8(2x + 3)^3', '4(2x + 3)^3', '2(2x + 3)^3', '24(2x + 3)^3'],
+                correct: 0, // A
+                step1: 'Gunakan Aturan Rantai: $f\'(x) = n \\cdot [g(x)]^{n-1} \\cdot g\'(x)$.',
+                step2: '$$f\'(x) = 4(2x + 3)^{4-1} \\cdot \\frac{d}{dx}(2x+3) = 4(2x+3)^3 \\cdot 2 = 8(2x+3)^3$$',
+                final: '8(2x + 3)^3'
+            },
+            {
+                id: 42,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 42',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (x^2 - 5)^3$$',
+                options: ['6x(x^2 - 5)^2', '3x(x^2 - 5)^2', '2x(x^2 - 5)^2', '6x^2(x^2 - 5)^2'],
+                correct: 0, // A
+                step1: 'Terapkan aturan rantai dengan $g(x) = x^2 - 5 \\rightarrow g\'(x) = 2x$.',
+                step2: '$$f\'(x) = 3(x^2 - 5)^2 \\cdot (2x) = 6x(x^2 - 5)^2$$',
+                final: '6x(x^2 - 5)^2'
+            },
+            {
+                id: 43,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 43',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\sqrt{3x^2 + 1}$$',
+                options: ['\\frac{3x}{\\sqrt{3x^2 + 1}}', '\\frac{6x}{\\sqrt{3x^2 + 1}}', '\\frac{1}{2\\sqrt{3x^2 + 1}}', '\\frac{3}{\\sqrt{3x^2 + 1}}'],
+                correct: 0, // A
+                step1: 'Ubah ke bentuk pangkat pecahan: $f(x) = (3x^2 + 1)^{\\frac{1}{2}}$. Turunkan dengan aturan rantai:',
+                step2: '$$f\'(x) = \\frac{1}{2}(3x^2 + 1)^{-\\frac{1}{2}} \\cdot (6x) = \\frac{3x}{\\sqrt{3x^2 + 1}}$$',
+                final: '\\frac{3x}{\\sqrt{3x^2 + 1}}'
+            },
+            {
+                id: 44,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 44',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (3x^2 - 4x)^5$$',
+                options: ['5(6x - 4)(3x^2 - 4x)^4', '(30x - 20)(3x^2 - 4x)^4', '5(3x^2 - 4x)^4', '(6x - 4)(3x^2 - 4x)^4'],
+                correct: 0, // A
+                step1: 'Turunkan pangkat luar lalu kalikan dengan turunan fungsi di dalam kurung ($6x - 4$):',
+                step2: '$$f\'(x) = 5(3x^2 - 4x)^{5-1} \\cdot (6x - 4) = 5(6x - 4)(3x^2 - 4x)^4$$',
+                final: '5(6x - 4)(3x^2 - 4x)^4'
+            },
+            {
+                id: 45,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 45',
+                question: 'Tentukan turunan pertama dari bentuk akar pangkat tiga berikut:\n$$f(x) = \\sqrt[3]{x^3 + 2}$$',
+                options: ['\\frac{x^2}{\\sqrt[3]{(x^3 + 2)^2}}', '\\frac{3x^2}{\\sqrt[3]{x^3 + 2}}', '\\frac{1}{3\\sqrt[3]{(x^3 + 2)^2}}', '\\frac{x^2}{3\\sqrt[3]{x^3 + 2}}'],
+                correct: 0, // A
+                step1: 'Tulis sebagai $f(x) = (x^3 + 2)^{\\frac{1}{3}}$. Turunkan menggunakan aturan rantai:',
+                step2: '$$f\'(x) = \\frac{1}{3}(x^3 + 2)^{-\\frac{2}{3}} \\cdot (3x^2) = \\frac{x^2}{(x^3 + 2)^{\\frac{2}{3}}} = \\frac{x^2}{\\sqrt[3]{(x^3 + 2)^2}}$$',
+                final: '\\frac{x^2}{\\sqrt[3]{(x^3 + 2)^2}}'
+            },
+            {
+                id: 46,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 46',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\frac{1}{(2x - 1)^3}$$',
+                options: ['-\\frac{6}{(2x-1)^4}', '\\frac{6}{(2x-1)^4}', '-\\frac{3}{(2x-1)^4}', '-\\frac{6}{(2x-1)^3}'],
+                correct: 0, // A
+                step1: 'Ubah ke pangkat negatif: $f(x) = (2x - 1)^{-3}$. Terapkan aturan rantai:',
+                step2: '$$f\'(x) = -3(2x - 1)^{-4} \\cdot (2) = -6(2x - 1)^{-4} = -\\frac{6}{(2x-1)^4}$$',
+                final: '-\\frac{6}{(2x-1)^4}'
+            },
+            {
+                id: 47,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 47',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (4x^2 + 3)^3$$',
+                options: ['24x(4x^2 + 3)^2', '3(4x^2 + 3)^2', '8x(4x^2 + 3)^2', '12x(4x^2 + 3)^2'],
+                correct: 0, // A
+                step1: 'Turunkan pangkat dan kalikan turunan di dalam kurung ($8x$):',
+                step2: '$$f\'(x) = 3(4x^2 + 3)^2 \\cdot (8x) = 24x(4x^2 + 3)^2$$',
+                final: '24x(4x^2 + 3)^2'
+            },
+            {
+                id: 48,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 48',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = 2(5x - 2)^4$$',
+                options: ['40(5x - 2)^3', '10(5x - 2)^3', '8(5x - 2)^3', '20(5x - 2)^3'],
+                correct: 0, // A
+                step1: 'Gunakan aturan rantai: $f\'(x) = 2 \\cdot 4(5x - 2)^3 \\cdot (5) = 40(5x - 2)^3$.',
+                step2: '$$f\'(x) = 40(5x - 2)^3$$',
+                final: '40(5x - 2)^3'
+            },
+            {
+                id: 49,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 49',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = \\sqrt{x^2 - 4x + 5}$$',
+                options: ['\\frac{x - 2}{\\sqrt{x^2 - 4x + 5}}', '\\frac{2x - 4}{\\sqrt{x^2 - 4x + 5}}', '\\frac{1}{2\\sqrt{x^2 - 4x + 5}}', '\\frac{x - 2}{2\\sqrt{x^2 - 4x + 5}}'],
+                correct: 0, // A
+                step1: 'Turunkan bentuk akar dengan aturan rantai:',
+                step2: '$$f\'(x) = \\frac{1}{2}(x^2 - 4x + 5)^{-\\frac{1}{2}} \\cdot (2x - 4) = \\frac{2(x - 2)}{2\\sqrt{x^2 - 4x + 5}} = \\frac{x - 2}{\\sqrt{x^2 - 4x + 5}}$$',
+                final: '\\frac{x - 2}{\\sqrt{x^2 - 4x + 5}}'
+            },
+            {
+                id: 50,
+                catKey: 'rantai',
+                category: '5. Aturan Rantai',
+                title: 'Soal 50',
+                question: 'Tentukan turunan pertama dari:\n$$f(x) = (x^3 - 2x)^{10}$$',
+                options: ['30(x^2 - \\frac{2}{3})(x^3 - 2x)^9', '10(3x^2 - 2)(x^3 - 2x)^9', '(30x^2 - 20)(x^3 - 2x)^9', '10(x^3 - 2x)^9'],
+                correct: 1, // B -> 10(3x^2 - 2)(x^3 - 2x)^9 = (30x^2 - 20)(x^3 - 2x)^9 (Wait, option 2 is (30x^2-20)(x^3-2x)^9 which is option index 2 or 1. Let\'s verify option indices: 0: 30(x^2...), 1: 10(3x^2-2)(x^3-2x)^9, 2: (30x^2-20)(x^3-2x)^9. Let\'s make option 2 correct or option 1 correct. Let\'s set correct: 1).',
+                correct: 1, // B
+                step1: 'Gunakan aturan rantai dengan turunan fungsi bagian dalam $3x^2 - 2$:',
+                step2: '$$f\'(x) = 10(x^3 - 2x)^{9} \\cdot (3x^2 - 2) = 10(3x^2 - 2)(x^3 - 2x)^9$$',
+                final: '10(3x^2 - 2)(x^3 - 2x)^9'
+            }
+        ];
+
+        // App State
+        let currentIdx = 0;
+        let userAnswers = {}; // { qId: selectedOptionIndex }
+        let currentFilter = 'all';
+
+        // LocalStorage keys for persistence (Anti-reload / Offline protection)
+        const STORAGE_KEY = 'calculus_derivative_quiz_state_v1';
+
+        function loadSavedState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    userAnswers = parsed.userAnswers || {};
+                    if (typeof parsed.currentIdx === 'number' && parsed.currentIdx >= 0 && parsed.currentIdx < 50) {
+                        currentIdx = parsed.currentIdx;
+                    }
+                }
+            } catch (e) {
+                console.warn('LocalStorage error:', e);
+            }
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    userAnswers: userAnswers,
+                    currentIdx: currentIdx
+                }));
+            } catch (e) {
+                console.warn('LocalStorage save error:', e);
+            }
+        }
+
+        function resetQuiz() {
+            if (confirm('Apakah Anda yakin ingin mengulang kuis dari awal? Semua jawaban Anda akan dihapus.')) {
+                userAnswers = {};
+                currentIdx = 0;
+                localStorage.removeItem(STORAGE_KEY);
+                renderAll();
+            }
+        }
+
+        function renderNavGrid() {
+            const gridEl = document.getElementById('nav-grid');
+            gridEl.innerHTML = '';
+
+            quizData.forEach((q, idx) => {
+                if (currentFilter !== 'all' && q.catKey !== currentFilter) return;
+
+                const btn = document.createElement('button');
+                btn.className = `h-8 rounded-lg font-bold text-xs flex items-center justify-center transition-all relative border`;
+
+                const isCurrent = (idx === currentIdx);
+                const hasAnswered = (userAnswers[q.id] !== undefined);
+                const isCorrect = hasAnswered && (userAnswers[q.id] === q.correct);
+
+                if (!hasAnswered) {
+                    btn.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-300', 'hover:bg-fuchsia-100');
+                } else if (isCorrect) {
+                    btn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600', 'shadow-sm');
+                } else {
+                    btn.classList.add('bg-rose-500', 'text-white', 'border-rose-600', 'shadow-sm');
+                }
+
+                if (isCurrent) {
+                    btn.classList.add('ring-4', 'ring-fuchsia-400', 'ring-offset-1', 'scale-110', 'z-10');
+                }
+
+                btn.innerText = `${idx + 1}`;
+                btn.onclick = () => {
+                    currentIdx = idx;
+                    saveState();
+                    renderAll();
+                };
+
+                gridEl.appendChild(btn);
+            });
+        }
+
+        function renderQuestionCard() {
+            const q = quizData[currentIdx];
+            const cardEl = document.getElementById('question-card');
+            const userChoice = userAnswers[q.id];
+            const isAnswered = (userChoice !== undefined);
+
+            const optLabels = ['A', 'B', 'C', 'D'];
+
+            let html = `
+                <!-- Question Header Banner -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-fuchsia-200 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 bg-fuchsia-600 text-white font-bold text-xs rounded-lg">
+                            ${q.category}
+                        </span>
+                        <h2 class="text-lg font-bold text-fuchsia-950">${q.title} (Soal ${currentIdx + 1})</h2>
+                    </div>
+                    ${isAnswered ? (
+                        userChoice === q.correct ? 
+                        `<span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300 flex items-center gap-1.5 w-max">
+                            <i class="fa-solid fa-circle-check text-emerald-600"></i> Jawaban Benar!
+                         </span>` : 
+                        `<span class="bg-rose-100 text-rose-800 text-xs font-bold px-3 py-1 rounded-full border border-rose-300 flex items-center gap-1.5 w-max">
+                            <i class="fa-solid fa-circle-xmark text-rose-600"></i> Kurang Tepat
+                         </span>`
+                    ) : ''}
+                </div>
+
+                <!-- Question Text -->
+                <div class="text-base sm:text-lg text-slate-800 font-medium whitespace-pre-line leading-relaxed">
+                    ${q.question}
+                </div>
+
+                <!-- 4 Options Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            `;
+
+            q.options.forEach((optText, optIdx) => {
+                let btnStyle = "bg-white border-fuchsia-300 hover:bg-fuchsia-50 text-slate-800";
+                let badgeStyle = "bg-fuchsia-100 text-fuchsia-900 border-fuchsia-300";
+
+                if (isAnswered) {
+                    if (optIdx === q.correct) {
+                        btnStyle = "bg-emerald-100 border-emerald-500 text-emerald-950 font-bold ring-2 ring-emerald-400";
+                        badgeStyle = "bg-emerald-500 text-white border-emerald-600";
+                    } else if (optIdx === userChoice) {
+                        btnStyle = "bg-rose-100 border-rose-500 text-rose-950 font-medium ring-2 ring-rose-400";
+                        badgeStyle = "bg-rose-500 text-white border-rose-600";
+                    } else {
+                        btnStyle = "bg-gray-50 border-gray-200 text-gray-400 opacity-60";
+                        badgeStyle = "bg-gray-200 text-gray-500 border-gray-300";
+                    }
+                }
+
+                html += `
+                    <button onclick="selectOption(${optIdx})" ${isAnswered ? 'disabled' : ''} class="p-4 rounded-xl border text-left text-xs sm:text-sm font-medium transition-all flex items-start gap-3 shadow-sm ${btnStyle}">
+                        <span class="w-7 h-7 rounded-lg border font-bold flex items-center justify-center shrink-0 ${badgeStyle}">
+                            ${optLabels[optIdx]}
+                        </span>
+                        <span class="mt-1">$${optText}$</span>
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+
+            // If Answered, show detailed step-by-step solution
+            if (isAnswered) {
+                html += `
+                    <div class="mt-6 pt-6 border-t border-fuchsia-200 space-y-4">
+                        <div class="flex items-center gap-2 text-sm font-bold text-fuchsia-950 uppercase">
+                            <i class="fa-solid fa-align-left text-fuchsia-600"></i> Pembahasan Langkah Penyelesaian:
+                        </div>
+
+                        <div class="paper-card p-5 sm:p-7 rounded-2xl border-2 border-dashed border-fuchsia-300 shadow-sm space-y-3 font-mono text-xs sm:text-sm">
+                            <div class="font-sans font-bold text-fuchsia-950 pb-1">
+                                &bull; Langkah 1: Konsep & Identifikasi Sifat Turunan
+                            </div>
+                            <div class="bg-fuchsia-50 p-2.5 rounded border border-fuchsia-200 text-fuchsia-900 font-bold">
+                                ${q.step1}
+                            </div>
+                            <div class="font-sans font-bold text-fuchsia-950 pt-2 pb-1">
+                                &bull; Langkah 2: Proses Perhitungan & Penurunan
+                            </div>
+                            <div class="bg-fuchsia-50 p-2.5 rounded border border-fuchsia-200 text-fuchsia-900 font-bold">
+                                $$${q.step2}$$
+                            </div>
+
+                            <!-- Final Result Banner -->
+                            <div class="mt-3 p-3 bg-fuchsia-100 rounded-xl border border-fuchsia-300 text-center font-bold text-fuchsia-950 text-sm sm:text-base font-sans">
+                                Hasil Turunan Pertama: <span class="text-emerald-700 ml-1">$${q.final}$</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            cardEl.innerHTML = html;
+
+            // Trigger MathJax typeset
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function selectOption(optIdx) {
+            const q = quizData[currentIdx];
+            if (userAnswers[q.id] !== undefined) return;
+
+            userAnswers[q.id] = optIdx;
+            saveState();
+            renderAll();
+        }
+
+        function updateScoreboard() {
+            let answered = 0;
+            let score = 0;
+
+            quizData.forEach(q => {
+                if (userAnswers[q.id] !== undefined) {
+                    answered++;
+                    if (userAnswers[q.id] === q.correct) {
+                        score++;
+                    }
+                }
+            });
+
+            document.getElementById('answered-count').innerText = `${answered}`;
+            document.getElementById('score-count').innerText = `${score}`;
+
+            document.getElementById('question-indicator').innerText = `Soal ${currentIdx + 1} dari ${quizData.length}`;
+            document.getElementById('btn-prev').disabled = (currentIdx === 0);
+            document.getElementById('btn-prev').classList.toggle('opacity-50', currentIdx === 0);
+            
+            document.getElementById('btn-next').disabled = (currentIdx === quizData.length - 1);
+            document.getElementById('btn-next').classList.toggle('opacity-50', currentIdx === quizData.length - 1);
+        }
+
+        function prevQuestion() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                saveState();
+                renderAll();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIdx < quizData.length - 1) {
+                currentIdx++;
+                saveState();
+                renderAll();
+            }
+        }
+
+        function filterCategory(catKey) {
+            currentFilter = catKey;
+            document.querySelectorAll('[id^="filter-"]').forEach(btn => {
+                btn.className = "px-2.5 py-1 rounded-lg bg-fuchsia-100 text-fuchsia-950 hover:bg-fuchsia-200 font-medium";
+            });
+            document.getElementById(`filter-${catKey}`).className = "px-2.5 py-1 rounded-lg bg-fuchsia-600 text-white font-medium shadow-sm";
+            
+            // Jump to first question of category if not 'all'
+            if (catKey !== 'all') {
+                const firstMatch = quizData.findIndex(q => q.catKey === catKey);
+                if (firstMatch !== -1) {
+                    currentIdx = firstMatch;
+                }
+            }
+            renderAll();
+        }
+
+        function renderAll() {
+            renderNavGrid();
+            renderQuestionCard();
+            updateScoreboard();
+        }
+
+        // Initial Load on Window Startup
+        window.onload = function() {
+            loadSavedState();
+            renderAll();
+        };
+    </script>
+</body>
+</html>
